@@ -1,0 +1,15 @@
+# Adds automatic HTTPS, which the camera needs. Used with compose.yaml by lightsail.sh.
+services:
+  caddy:
+    image: caddy:2.8.4
+    command: caddy reverse-proxy --from ${SITE} --to sudhaar:7860
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - caddy-data:/data
+    restart: unless-stopped
+    depends_on:
+      - sudhaar
+volumes:
+  caddy-data:
